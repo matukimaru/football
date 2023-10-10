@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from datetime import date
+from datetime import date, timedelta
 from time import sleep
 
 from apitools import API

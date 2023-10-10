@@ -1,4 +1,4 @@
-def calculate_match_winner_odds(odd: list) -> list:
+def calculate_averages(odd: list) -> list:
     response = [odd["fixture"]["id"]]
 
     home = [

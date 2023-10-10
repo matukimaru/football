@@ -1,7 +1,5 @@
-import json
+from datetime import date
 
-with open("resources/json/markets.json", "r") as f:
-    markets = json.loads(f.read())
+week = date.today().isocalendar().week
 
-for i in markets:
-    print(i)
+print(type(week))
