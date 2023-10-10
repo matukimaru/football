@@ -1,6 +1,8 @@
 import json
 from datetime import date
 
+from apitools import calculate_match_winner_odds
+
 # from decouple import config
 
 # root_path = config("ROOT_PATH")
@@ -29,35 +31,7 @@ print(len(odds))
 count = 0
 
 for odd in odds:
-    home = [
-        float(i["odd"])
-        for bookmaker in odd["bookmakers"]
-        for bet in bookmaker["bets"]
-        if bet["id"] == 1
-        for i in bet["values"]
-        if i["value"] == "Home"
-    ]
-    home_avg = round(sum(home) / len(home), 2)
-
-    draw = [
-        float(i["odd"])
-        for bookmaker in odd["bookmakers"]
-        for bet in bookmaker["bets"]
-        if bet["id"] == 1
-        for i in bet["values"]
-        if i["value"] == "Draw"
-    ]
-    draw_avg = round(sum(draw) / len(draw), 2)
-
-    away = [
-        float(i["odd"])
-        for bookmaker in odd["bookmakers"]
-        for bet in bookmaker["bets"]
-        if bet["id"] == 1
-        for i in bet["values"]
-        if i["value"] == "Away"
-    ]
-    away_avg = round(sum(away) / len(away), 2)
+    match_winner = calculate_match_winner_odds(odd)
 
     # condition 1
     # if 1.95 <= home_avg <= 2.15 or 1.95 <= draw_avg <= 2.15 or 1.95 <= away_avg <= 2.15:
@@ -65,9 +39,11 @@ for odd in odds:
     #     print(f"{home_avg} : {draw_avg} : {away_avg}")
 
     # condition 2
-    if (home_avg >= 2.2 and away_avg >= 2.2) and (abs(home_avg - away_avg) <= 0.2):
+    if (match_winner[0] >= 2.2 and match_winner[2] >= 2.2) and (
+        abs(match_winner[0] - match_winner[2]) <= 0.2
+    ):
         count += 1
-        print(f"{home_avg} : {draw_avg} : {away_avg}")
+        print(f"{match_winner[0]} : {match_winner[1]} : {match_winner[2]}")
 
     # print(f"{home_avg} : {draw_avg} : {away_avg}")
     # break

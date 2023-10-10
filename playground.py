@@ -1,13 +1,7 @@
 import json
 
-from apitools import API
+with open("resources/json/markets.json", "r") as f:
+    markets = json.loads(f.read())
 
-api = API()
-
-params = {}
-response = api.query("/odds/bets", params)
-if not len(response["errors"]):
-    with open("resources/json/markets.json", "w+") as f:
-        f.write(json.dumps(response["response"]))
-else:
-    print(response)
+for i in markets:
+    print(i)
