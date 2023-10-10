@@ -1,0 +1,5 @@
+requests
+python-decouple
+fuzzywuzzy
+python-Levenshtein
+tabulate
