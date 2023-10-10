@@ -1,5 +1,5 @@
 def calculate_match_winner_odds(odd: list) -> list:
-    response = []
+    response = [odd["fixture"]["id"]]
 
     home = [
         float(i["odd"])
@@ -33,5 +33,27 @@ def calculate_match_winner_odds(odd: list) -> list:
     ]
     away_avg = round(sum(away) / len(away), 2)
     response.append(away_avg)
+
+    over25 = [
+        float(i["odd"])
+        for bookmaker in odd["bookmakers"]
+        for bet in bookmaker["bets"]
+        if bet["id"] == 5
+        for i in bet["values"]
+        if i["value"] == "Over 2.5"
+    ]
+    over25_avg = round(sum(over25) / len(over25), 2)
+    response.append(over25_avg)
+
+    under25 = [
+        float(i["odd"])
+        for bookmaker in odd["bookmakers"]
+        for bet in bookmaker["bets"]
+        if bet["id"] == 5
+        for i in bet["values"]
+        if i["value"] == "Under 2.5"
+    ]
+    under25_avg = round(sum(under25) / len(under25), 2)
+    response.append(under25_avg)
 
     return response
