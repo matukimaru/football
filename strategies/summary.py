@@ -41,12 +41,13 @@ def daily(date: date, week: int):
             ]
             for fixture in fixtures
             if fixture["fixture"]["id"] == odd["fixture"]["id"]
-        ][0]
+        ]  # [0]
+        print(outcomes)
         data.append((averages + outcomes))
 
     return data
 
 
 # test daily() summary function
-data = daily(date.today(), 41)
-print(tabulate(data, headers="firstrow", showindex="always", tablefmt="simple"))
+# data = daily(date.today(), 41)
+# print(tabulate(data, headers="firstrow", showindex="always", tablefmt="simple"))

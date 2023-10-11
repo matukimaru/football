@@ -63,3 +63,9 @@ def calculate_averages(odd: list) -> list:
     response.append(under25_avg)
 
     return response
+
+
+def calculate_outcomes(fixture: dict) -> list:
+    response = [fixture["id"]]
+
+    return response

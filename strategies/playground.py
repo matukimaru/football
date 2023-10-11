@@ -53,14 +53,20 @@ for i in range(len(data)):
             # over biased
             if data[i][4] > data[i][5]:
                 count[1] += 1
-                if data[i][7] >= data[i][8]:
-                    count[2] += 1
+                try:
+                    if data[i][7] >= data[i][8]:
+                        count[2] += 1
+                except IndexError:
+                    pass
 
             # under biased
             if data[i][4] < data[i][5]:
                 count[3] += 1
-                if data[i][7] >= data[i][8]:
-                    count[4] += 1
+                try:
+                    if data[i][7] >= data[i][8]:
+                        count[4] += 1
+                except IndexError:
+                    pass
 
             # match_winner.append(data[i])
 

@@ -4,9 +4,9 @@ import os
 from datetime import date, timedelta
 from time import sleep
 
-from apitools import API
+from collect.apiutils import ApiSports
 
-api = API()
+api = ApiSports()
 today = date.today() - timedelta(days=1)
 week = today.isocalendar().week
 
