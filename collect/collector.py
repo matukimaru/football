@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from time import sleep
 
-from apiutils import ApiSports
+from collect.apiutils import ApiSports
 
 
 class Collect:
