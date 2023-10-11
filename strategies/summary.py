@@ -22,7 +22,7 @@ def daily(date: date, week: int):
             "Away",
             "Over 2.5",
             "Under 2.5",
-            "Status",
+            "Status",  # 6
             "Home Goals",
             "Away Goals",
         ],
@@ -48,5 +48,5 @@ def daily(date: date, week: int):
 
 
 # test daily() summary function
-data = daily(date.today() - timedelta(days=1), 41)
+data = daily(date.today(), 41)
 print(tabulate(data, headers="firstrow", showindex="always", tablefmt="simple"))

@@ -42,7 +42,10 @@ def calculate_averages(odd: list) -> list:
         for i in bet["values"]
         if i["value"] == "Over 2.5"
     ]
-    over25_avg = round(sum(over25) / len(over25), 2)
+    try:
+        over25_avg = round(sum(over25) / len(over25), 2)
+    except ZeroDivisionError:
+        over25_avg = 0
     response.append(over25_avg)
 
     under25 = [
@@ -53,7 +56,10 @@ def calculate_averages(odd: list) -> list:
         for i in bet["values"]
         if i["value"] == "Under 2.5"
     ]
-    under25_avg = round(sum(under25) / len(under25), 2)
+    try:
+        under25_avg = round(sum(under25) / len(under25), 2)
+    except ZeroDivisionError:
+        under25_avg = 0
     response.append(under25_avg)
 
     return response

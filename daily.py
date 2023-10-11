@@ -7,8 +7,8 @@ from time import sleep
 from apitools import API
 
 api = API()
-today = date.today()
-week = date.today().isocalendar().week
+today = date.today() - timedelta(days=1)
+week = today.isocalendar().week
 
 # create folder structure
 if not os.path.exists(f"outputs/week-{week}"):
@@ -58,10 +58,11 @@ def odds():
         odds += response["response"]
 
         # loop through pages
+        print(f"Pages = {pages}")
         if pages > 1:
             for page in range(pages - 1):
                 # throttling requests
-                if (page + 1) % 10 == 0:
+                if (page + 1) % 9 == 0:
                     print("sleeping")
                     sleep(61)
 
