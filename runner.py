@@ -7,7 +7,7 @@ import analyze.utils as analyzer
 from collect.collector import Collect
 
 # collect
-dates = ["2023-10-10", "2023-10-11"]
+dates = ["2023-10-12"]
 collector = Collect(dates)
 
 # analyze
@@ -31,5 +31,6 @@ for d in dates:
                 data.append(analyzer.calculate_status(fixture, odd))
                 # move to next fixture
                 break
+
 
 print(tabulate(data, headers=analyzer.headers, showindex="always", tablefmt="simple"))
