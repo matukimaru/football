@@ -34,3 +34,18 @@ for fixture in fixtures:
 
 with open("resources/predictions.json", "w+") as f:
     f.write(json.dumps(predictions))
+
+
+# import json
+
+# # fresh = [{"id": "1", "name": "John"}, {"id": "2", "name": "Jane"}]
+
+
+# with open("resources/test.json", "r") as f:
+#     curr = json.loads(f.read())
+
+# another = [{"id": "10", "name": "XXIC"}]
+# curr += [another[0]]
+
+# with open("resources/test.json", "w") as f:
+#     f.write(json.dumps(curr))
