@@ -7,7 +7,7 @@ import analyze.utils as analyzer
 from collect.collector import Collect
 
 # collect
-dates = ["2023-10-12"]
+dates = ["2023-10-13"]
 collector = Collect(dates)
 
 # analyze

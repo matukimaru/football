@@ -14,7 +14,6 @@ class Collect:
             level=logging.INFO,
             format="%(asctime)s - %(name)s - %(levelname)s : %(message)s",
         )
-        #
         # init dates. _dates should be provided with the correct format (YYYY-MM-DD)
         self.date_format = "%Y-%m-%d"
         self.dates = []
@@ -35,16 +34,25 @@ class Collect:
                 logging.info(f"created output directories for week {w}")
         # init ApiSports
         self.api = ApiSports()
+        # api call counter
+        self.count = 1
 
         # execute collection
+        self.collect_odds()  # collecting odds first as collecting fixtures also collects predictions
         self.collect_fixtures()
-        self.collect_odds()
+
+    def rate_limit(self):
+        if self.count % 10 == 0:
+            logging.info(f"\n>>> rate limiting... sleep for a minute\n")
+            sleep(61)
 
     def collect_fixtures(self):
         for idx, date in enumerate(self.dates):
+            self.rate_limit()
             params = {"date": date.strftime("%Y-%m-%d"), "timezone": "Africa/Nairobi"}
             logging.info(f"fetching fixtures for {date.strftime('%Y-%m-%d')}...")
             response = self.api.query("/fixtures", params)
+            self.count += 1
             if not len(response["errors"]):
                 fixtures = response["response"]
                 with open(
@@ -70,6 +78,7 @@ class Collect:
                 f"outputs/week-{self.weeks[idx]}/odds/{date.strftime('%Y-%m-%d')}.json"
             ):
                 odds = []
+                self.rate_limit()
                 params = {
                     "date": date.strftime("%Y-%m-%d"),
                     "timezone": "Africa/Nairobi",
@@ -78,17 +87,14 @@ class Collect:
                     f"fetching (page 1) odds for {date.strftime('%Y-%m-%d')}..."
                 )
                 response = self.api.query("/odds", params)
+                self.count += 1
                 if not len(response["errors"]):
                     pages = response["paging"]["total"]
                     odds += response["response"]
                     logging.info(f"extra pages to fetch = {pages - 1}")
                     if pages > 1:
                         for page in range(pages - 1):
-                            # throttling requests
-                            if (page + 1) % 8 == 0:
-                                print("sleeping")
-                                sleep(61)
-
+                            self.rate_limit()
                             params = {
                                 "date": date.strftime("%Y-%m-%d"),
                                 "timezone": "Africa/Nairobi",
@@ -98,6 +104,7 @@ class Collect:
                                 f"fetching (page {page + 2}) odds for {date.strftime('%Y-%m-%d')}..."
                             )
                             response = self.api.query("/odds", params)
+                            self.count += 1
                             if not len(response["errors"]):
                                 odds += response["response"]
                                 logging.info(f"successful")
@@ -116,27 +123,31 @@ class Collect:
             else:
                 logging.info(f"odds for {date.strftime('%Y-%m-%d')} already exist")
 
-    # //todo prepend fixture-id to predictions
     def collect_prediction(self, fixture, date):
+        prepend = {
+            "fixture": fixture["fixture"]["id"],
+        }
         name = (
             f"{fixture['teams']['home']['name']} vs {fixture['teams']['away']['name']}"
         )
         if not os.path.exists(
             f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json"
         ):
+            self.rate_limit()
             # file does not exist - create and update
             params = {
                 "fixture": fixture["fixture"]["id"],
             }
             logging.info(f"fetching prediction for {name}")
             response = self.api.query("/predictions", params)
+            self.count += 1
             if not len(response["errors"]):
                 # write to file
                 with open(
                     f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json",
                     "w+",
                 ) as f:
-                    f.write(json.dumps(response["response"]))
+                    f.write(json.dumps(prepend | response["response"][0]))
                 logging.info("file created and updated")
             else:
                 logging.error(f"no prediction for {name}: {response['errors']}")
@@ -151,7 +162,10 @@ class Collect:
                 f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json",
                 "r",
             ) as f:
-                predictions = json.loads(f.read())
+                try:
+                    predictions = json.loads(f.read())
+                except Exception:
+                    predictions = []
 
             # loop through predictions and check if fixture's prediction is there
             exists = False
@@ -164,11 +178,13 @@ class Collect:
                     continue
             if not exists:
                 # fetch prediction
+                self.rate_limit()
                 logging.info(f"fetching prediction for {name}")
                 response = self.api.query("/predictions", params)
+                self.count += 1
                 if not len(response["errors"]):
                     # update predictions list
-                    predictions.append(response["response"][0])
+                    predictions.append(prepend | response["response"][0])
                 else:
                     logging.error(f"no prediction for {name}: {response['errors']}")
             else:
