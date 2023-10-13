@@ -8,7 +8,7 @@ import analyze.utils as analyzer
 
 # collect
 dates = [
-    "2023-10-12",
+    "2023-10-13",
 ]
 
 # analyze
@@ -32,6 +32,8 @@ for d in dates:
                 data.append(analyzer.calculate_status(fixture, odd))
                 # move to next fixture
                 break
+
+print(tabulate(data, headers=analyzer.headers, showindex="always", tablefmt="simple"))
 
 # strategies
 # loop through fixtures
