@@ -1,0 +1,41 @@
+2023-10-10 07:47:15,242 fetching fixtures for 2023-10-10
+2023-10-10 07:47:15,243 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:16,535 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-10&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-10 07:47:16,898 fetching (page 1) odds for 2023-10-10
+2023-10-10 07:47:16,899 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:18,329 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-10 07:47:19,176 fetching (page 2) odds for 2023-10-10
+2023-10-10 07:47:19,177 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:21,195 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=2 HTTP/1.1" 200 None
+2023-10-10 07:47:21,613 fetching (page 3) odds for 2023-10-10
+2023-10-10 07:47:21,614 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:22,389 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=3 HTTP/1.1" 200 None
+2023-10-10 07:47:22,799 fetching (page 4) odds for 2023-10-10
+2023-10-10 07:47:22,799 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:23,565 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=4 HTTP/1.1" 200 None
+2023-10-10 07:47:23,963 fetching (page 5) odds for 2023-10-10
+2023-10-10 07:47:23,963 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:24,707 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=5 HTTP/1.1" 200 None
+2023-10-10 07:47:25,419 fetching (page 6) odds for 2023-10-10
+2023-10-10 07:47:25,420 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:26,159 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=6 HTTP/1.1" 200 None
+2023-10-10 07:47:26,742 fetching (page 7) odds for 2023-10-10
+2023-10-10 07:47:26,743 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:27,953 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=7 HTTP/1.1" 200 None
+2023-10-10 07:47:28,364 fetching (page 8) odds for 2023-10-10
+2023-10-10 07:47:28,365 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:29,227 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=8 HTTP/1.1" 200 None
+2023-10-10 07:47:29,613 fetching (page 9) odds for 2023-10-10
+2023-10-10 07:47:29,613 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 07:47:30,820 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-10&timezone=Africa%2FNairobi&page=9 HTTP/1.1" 200 None
+2023-10-10 11:30:38,176 fetching fixtures for 2023-10-10
+2023-10-10 11:30:38,178 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 11:30:40,498 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-10&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-10 19:14:57,563 fetching fixtures for 2023-10-10
+2023-10-10 19:14:57,564 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 19:15:49,332 fetching fixtures for 2023-10-10
+2023-10-10 19:15:49,333 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 19:15:55,301 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-10&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-11 05:04:08,176 fetching fixtures for 2023-10-10
+2023-10-11 05:04:08,178 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-11 05:04:10,807 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-10&timezone=Africa%2FNairobi HTTP/1.1" 200 None

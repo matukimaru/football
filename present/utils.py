@@ -31,7 +31,7 @@ headers = [
     "PrDfAw",  # 29 prediction defence away
     "L5GfHm",  # 30 last 5 goals for home
     "L5GaHm",  # 31 last 5 goals against home
-    "LfGfAw",  # 32 last 5 goals for away
+    "L5GfAw",  # 32 last 5 goals for away
     "L5GaAw",  # 33 last 5 goals against away
     "LgFmHm",  # 34 league form home
     "LgFmAw",  # 35 league form away

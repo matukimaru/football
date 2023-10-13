@@ -5,6 +5,7 @@ from datetime import datetime
 
 from tabulate import tabulate
 
+from analyze import strategies
 from present.utils import extract_data, headers
 
 logging.basicConfig(
@@ -71,4 +72,11 @@ for idx, date in enumerate(dates):
         exit(0)
 
 # display data
-print(tabulate(data, headers=headers, showindex="always", tablefmt="simple"))
+# print(tabulate(data, headers=headers, showindex="always", tablefmt="simple"))
+
+
+# analyze data
+# call function in analyze
+res = strategies.match_winner_1(data)
+print(tabulate(res, headers=headers, showindex="always", tablefmt="simple"))
+print(f"------\nTotal: {len(res)}")

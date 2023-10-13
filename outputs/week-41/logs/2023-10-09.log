@@ -1,0 +1,63 @@
+2023-10-09 20:08:22,087 fetching fixtures for 2023-10-09
+2023-10-09 20:08:22,089 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 20:08:26,011 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-09 20:32:16,953 fetching odds for 2023-10-09
+2023-10-09 20:32:16,955 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 20:32:18,692 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-09 21:16:36,002 fetching (page 1) odds for 2023-10-09
+2023-10-09 21:16:36,003 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:16:37,669 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-09 21:17:18,973 fetching (page 1) odds for 2023-10-09
+2023-10-09 21:17:18,974 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:20,649 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-09 21:17:21,387 fetching (page 2) odds for 2023-10-09
+2023-10-09 21:17:21,388 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:22,502 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=2 HTTP/1.1" 200 None
+2023-10-09 21:17:23,185 fetching (page 3) odds for 2023-10-09
+2023-10-09 21:17:23,186 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:24,707 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=3 HTTP/1.1" 200 None
+2023-10-09 21:17:25,892 fetching (page 4) odds for 2023-10-09
+2023-10-09 21:17:25,893 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:27,360 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=4 HTTP/1.1" 200 None
+2023-10-09 21:17:28,154 fetching (page 5) odds for 2023-10-09
+2023-10-09 21:17:28,155 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:29,328 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=5 HTTP/1.1" 200 None
+2023-10-09 21:17:30,595 fetching (page 6) odds for 2023-10-09
+2023-10-09 21:17:30,596 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:31,912 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=6 HTTP/1.1" 200 None
+2023-10-09 21:17:32,662 fetching (page 7) odds for 2023-10-09
+2023-10-09 21:17:32,663 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:34,307 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=7 HTTP/1.1" 200 None
+2023-10-09 21:17:35,615 fetching (page 8) odds for 2023-10-09
+2023-10-09 21:17:35,618 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:17:36,931 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=8 HTTP/1.1" 200 None
+2023-10-09 21:18:38,634 fetching (page 9) odds for 2023-10-09
+2023-10-09 21:18:38,641 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:40,620 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=9 HTTP/1.1" 200 None
+2023-10-09 21:18:41,076 fetching (page 10) odds for 2023-10-09
+2023-10-09 21:18:41,077 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:42,054 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=10 HTTP/1.1" 200 None
+2023-10-09 21:18:42,884 fetching (page 11) odds for 2023-10-09
+2023-10-09 21:18:42,885 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:44,288 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=11 HTTP/1.1" 200 None
+2023-10-09 21:18:45,232 fetching (page 12) odds for 2023-10-09
+2023-10-09 21:18:45,233 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:46,587 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=12 HTTP/1.1" 200 None
+2023-10-09 21:18:47,339 fetching (page 13) odds for 2023-10-09
+2023-10-09 21:18:47,340 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:48,811 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=13 HTTP/1.1" 200 None
+2023-10-09 21:18:49,434 fetching (page 14) odds for 2023-10-09
+2023-10-09 21:18:49,435 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:50,245 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=14 HTTP/1.1" 200 None
+2023-10-09 21:18:50,490 fetching (page 15) odds for 2023-10-09
+2023-10-09 21:18:50,491 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:18:51,323 https://v3.football.api-sports.io:443 "GET /odds?date=2023-10-09&timezone=Africa%2FNairobi&page=15 HTTP/1.1" 200 None
+2023-10-09 21:33:07,451 fetching fixtures for 2023-10-09
+2023-10-09 21:33:07,453 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:33:13,564 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-09 21:40:03,214 fetching fixtures for 2023-10-09
+2023-10-09 21:40:03,215 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-09 21:40:05,113 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None
+2023-10-10 11:38:47,858 fetching fixtures for 2023-10-09
+2023-10-10 11:38:47,859 Starting new HTTPS connection (1): v3.football.api-sports.io:443
+2023-10-10 11:38:49,015 https://v3.football.api-sports.io:443 "GET /fixtures?date=2023-10-09&timezone=Africa%2FNairobi HTTP/1.1" 200 None

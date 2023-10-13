@@ -42,9 +42,10 @@ class Collect:
         self.collect_fixtures()
 
     def rate_limit(self):
-        if self.count % 10 == 0:
-            logging.info(f"\n>>> rate limiting... sleep for a minute\n")
-            sleep(61)
+        # if self.count % 10 == 0:
+        #     logging.info(f"\n>>> rate limiting... sleep for a minute\n")
+        #     sleep(61)
+        pass
 
     def collect_fixtures(self):
         for idx, date in enumerate(self.dates):
@@ -170,11 +171,14 @@ class Collect:
             # loop through predictions and check if fixture's prediction is there
             exists = False
             for prediction in predictions:
-                n = f"{prediction['teams']['home']['name']} vs {prediction['teams']['away']['name']}"
-                if n == name:
-                    exists = True
-                    break
-                else:
+                try:
+                    n = f"{prediction['teams']['home']['name']} vs {prediction['teams']['away']['name']}"
+                    if n == name:
+                        exists = True
+                        break
+                    else:
+                        continue
+                except Exception:
                     continue
             if not exists:
                 # fetch prediction
