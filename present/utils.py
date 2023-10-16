@@ -193,7 +193,19 @@ def extract_data(fixture: dict, odds: dict, prediction: dict) -> list:
 
     # prediction winner (18)
     try:
-        data.append(prediction["predictions"]["winner"]["name"])
+        if (
+            prediction["predictions"]["winner"]["id"]
+            == prediction["teams"]["home"]["id"]
+        ):
+            data.append(1)  # home wins
+        elif (
+            prediction["predictions"]["winner"]["id"]
+            == prediction["teams"]["away"]["id"]
+        ):
+            data.append(2)  # away wins
+        else:
+            data.append(0)  # no prediction
+        # data.append(prediction["predictions"]["winner"]["name"])
     except KeyError:
         data.append("-")
     # prediction goals (19-20)
@@ -265,11 +277,13 @@ def extract_data(fixture: dict, odds: dict, prediction: dict) -> list:
         data.append("-")
     # league form (34-35)
     try:
-        data.append(prediction["teams"]["home"]["league"]["form"])
+        fm = str(prediction["teams"]["home"]["league"]["form"])
+        data.append(fm[:5])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["teams"]["away"]["league"]["form"])
+        fm = str(prediction["teams"]["away"]["league"]["form"])
+        data.append(fm[:5])
     except KeyError:
         data.append("-")
 

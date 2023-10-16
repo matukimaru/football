@@ -31,6 +31,7 @@ class Collect:
                 os.mkdir(f"outputs/week-{w}/odds")
                 os.mkdir(f"outputs/week-{w}/predictions")
                 os.mkdir(f"outputs/week-{w}/logs")
+                os.mkdir(f"outputs/week-{w}/strategies")
                 logging.info(f"created output directories for week {w}")
         # init ApiSports
         self.api = ApiSports()
@@ -148,7 +149,11 @@ class Collect:
                     f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json",
                     "w+",
                 ) as f:
-                    f.write(json.dumps(prepend | response["response"][0]))
+                    f.write(
+                        json.dumps(
+                            [prepend | response["response"][0]],
+                        )
+                    )
                 logging.info("file created and updated")
             else:
                 logging.error(f"no prediction for {name}: {response['errors']}")
@@ -165,6 +170,7 @@ class Collect:
             ) as f:
                 try:
                     predictions = json.loads(f.read())
+                    # exit(0)
                 except Exception:
                     predictions = []
 
