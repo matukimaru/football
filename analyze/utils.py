@@ -1,65 +1,54 @@
 headers = [
     "FxId",  # 0    fixture id
-    "OdHm",  # 1    odd home win
-    "OdDr",  # 2    odd draw
-    "OdAw",  # 3    odd away win
-    "OdHmH",  # 4  odd home win first half
-    "OdDrH",  # 5  odd draw first half
-    "OdAwH",  # 6  odd away win first half
-    "OdOv2",  # 7  odd over 2.5
-    "OdUn2",  # 8  odd under 2.5
-    "OdBtY",  # 9  odd both teams to score
-    "OdBtN",  # 10 odd both teams not to score
-    "Sts",  # 11    fixture status
-    "RsHmH",  # 12 result home first half
-    "RsAwH",  # 13 result away first half
-    "RsHmF",  # 14 result home full time
-    "RsAwF",  # 15 result away full time
-]
-
-new_headers = [
-    "FxId",  # 0    fixture id
-    "OdHm",  # 1    odd home win
-    "OdDr",  # 2    odd draw
-    "OdAw",  # 3    odd away win
-    "OdHmH",  # 4  odd home win first half
-    "OdDrH",  # 5  odd draw first half
-    "OdAwH",  # 6  odd away win first half
-    "OdOv2",  # 7  odd over 2.5
-    "OdUn2",  # 8  odd under 2.5
-    "OdBtY",  # 9  odd both teams to score
-    "OdBtN",  # 10 odd both teams not to score
-    "Sts",  # 11    fixture status
-    "RsHmH",  # 12 result home first half
-    "RsAwH",  # 13 result away first half
-    "RsHmF",  # 14 result home full time
-    "RsAwF",  # 15 result away full time
-    "PrWnr",  # 16  prediction winner
-    "PrGlHm",  # 17 prediction goals home
-    "PrGlAw",  # 18 prediction goals away
-    "PrPrHm",  # 19 prediction percent home
-    "PrPrDr",  # 20 prediction percent draw
-    "PrPrAw",  # 21 prediction percent away
-    "PrFmHm",  # 22 prediction form home
-    "PrFmAw",  # 23 prediction form away
-    "PrAtHm",  # 24 prediction attack home
-    "PrAtAw",  # 25 prediction attack away
-    "PrDfHm",  # 26 prediction defence home
-    "PrDfAw",  # 27 prediction defence away
-    "L5GfHm",  # 28 last 5 goals for home
-    "L5GaHm",  # 29 last 5 goals against home
-    "LfGfAw",  # 30 last 5 goals for away
-    "L5GaAw",  # 31 last 5 goals against away
-    "LgFmHm",  # 32 league form home
-    "LgFmAw",  # 33 league form away
+    "FxDt",  # 1    fixture date
+    "FxName",  # 2  fixture name
+    "OdHm",  # 3    odd home win
+    "OdDr",  # 4    odd draw
+    "OdAw",  # 5    odd away win
+    "OdHmH",  # 6  odd home win first half
+    "OdDrH",  # 7  odd draw first half
+    "OdAwH",  # 8  odd away win first half
+    "OdOv2",  # 9  odd over 2.5
+    "OdUn2",  # 10  odd under 2.5
+    "OdBtY",  # 11  odd both teams to score
+    "OdBtN",  # 12 odd both teams not to score
+    "Sts",  # 13    fixture status
+    "RsHmH",  # 14 result home first half
+    "RsAwH",  # 15 result away first half
+    "RsHmF",  # 16 result home full time
+    "RsAwF",  # 17 result away full time
+    "PrWnr",  # 18  prediction winner
+    "PrGlHm",  # 19 prediction goals home
+    "PrGlAw",  # 20 prediction goals away
+    "PrPrHm",  # 21 prediction percent home
+    "PrPrDr",  # 22 prediction percent draw
+    "PrPrAw",  # 23 prediction percent away
+    "PrFmHm",  # 24 prediction form home
+    "PrFmAw",  # 25 prediction form away
+    "PrAtHm",  # 26 prediction attack home
+    "PrAtAw",  # 27 prediction attack away
+    "PrDfHm",  # 28 prediction defence home
+    "PrDfAw",  # 29 prediction defence away
+    #
+    "L5GfHm",  # 30 last 5 goals for home
+    "L5GaHm",  # 31 last 5 goals against home
+    "L5GfAw",  # 32 last 5 goals for away
+    "L5GaAw",  # 33 last 5 goals against away
+    #
+    "LgFmHm",  # 34 league form home
+    "LgFmAw",  # 35 league form away
 ]
 
 
-def calculate_status(fixture: dict, odds: dict) -> list:
-    # if an odd does not exist, set it to0
-    data = [fixture["fixture"]["id"]]
+def extract_data(fixture: dict, odds: dict, prediction: dict) -> list:
+    # id, date, name (0-2)
+    data = [
+        fixture["fixture"]["id"],
+        fixture["fixture"]["date"],
+        f'{fixture["teams"]["home"]["name"]} v {fixture["teams"]["away"]["name"]}',
+    ]
 
-    # Match Winner
+    # Match Winner (3-5)
     try:
         home = [
             float(i["odd"])
@@ -73,7 +62,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         home_avg = 0
     data.append(home_avg)
-    #
     try:
         draw = [
             float(i["odd"])
@@ -87,7 +75,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         draw_avg = 0
     data.append(draw_avg)
-    #
     try:
         away = [
             float(i["odd"])
@@ -102,7 +89,7 @@ def calculate_status(fixture: dict, odds: dict) -> list:
         away_avg = 0
     data.append(away_avg)
 
-    # First Half Winner
+    # First Half Winner (6-8)
     try:
         home_fh = [
             float(i["odd"])
@@ -116,7 +103,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         home_fh_avg = 0
     data.append(home_fh_avg)
-    #
     try:
         draw_fh = [
             float(i["odd"])
@@ -130,7 +116,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         draw_fh_avg = 0
     data.append(draw_fh_avg)
-    #
     try:
         away_fh = [
             float(i["odd"])
@@ -145,7 +130,7 @@ def calculate_status(fixture: dict, odds: dict) -> list:
         away_fh_avg = 0
     data.append(away_fh_avg)
 
-    # Over/Under 2.5
+    # Over/Under 2.5 (9-10)
     try:
         over25 = [
             float(i["odd"])
@@ -159,7 +144,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         over25_avg = 0
     data.append(over25_avg)
-    #
     try:
         under25 = [
             float(i["odd"])
@@ -174,7 +158,7 @@ def calculate_status(fixture: dict, odds: dict) -> list:
         under25_avg = 0
     data.append(under25_avg)
 
-    # Both Teams Score
+    # Both Teams Score (11-12)
     try:
         btts_yes = [
             float(i["odd"])
@@ -188,7 +172,6 @@ def calculate_status(fixture: dict, odds: dict) -> list:
     except Exception:
         btts_yes_avg = 0
     data.append(btts_yes_avg)
-    #
     try:
         btts_no = [
             float(i["odd"])
@@ -203,18 +186,112 @@ def calculate_status(fixture: dict, odds: dict) -> list:
         btts_no_avg = 0
     data.append(btts_no_avg)
 
-    # Outcomes
+    # Outcomes (13-17)
     data.append(fixture["fixture"]["status"]["short"])
     data.append(fixture["score"]["halftime"]["home"])
     data.append(fixture["score"]["halftime"]["away"])
     data.append(fixture["score"]["fulltime"]["home"])
     data.append(fixture["score"]["fulltime"]["away"])
 
-    # logging.info(
-    #     f"Averages: 3-Way FT {home_fh_avg}-{draw_fh_avg}-{away_fh_avg} | "
-    #     f"3-Way 1H {home_avg}-{draw_avg}-{away_avg} | "
-    #     f"Over/Under (2.5) {over25_avg}-{under25_avg} | "
-    #     f"Both Teams Score {btts_yes_avg}-{btts_no_avg}"
-    # )
+    # prediction winner (18)
+    try:
+        if (
+            prediction["predictions"]["winner"]["id"]
+            == prediction["teams"]["home"]["id"]
+        ):
+            data.append(1)  # home wins
+        elif (
+            prediction["predictions"]["winner"]["id"]
+            == prediction["teams"]["away"]["id"]
+        ):
+            data.append(2)  # away wins
+        else:
+            data.append(0)  # no prediction
+        # data.append(prediction["predictions"]["winner"]["name"])
+    except KeyError:
+        data.append(0)
+    # prediction goals (19-20)
+    try:
+        data.append(prediction["predictions"]["goals"]["home"])
+    except KeyError:
+        data.append("0")
+    try:
+        data.append(prediction["predictions"]["goals"]["away"])
+    except KeyError:
+        data.append("0")
+
+    # prediction percentages (21-23)
+    try:
+        data.append(int(prediction["predictions"]["percent"]["home"][:-1]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(int(prediction["predictions"]["percent"]["draw"][:-1]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(int(prediction["predictions"]["percent"]["away"][:-1]))
+    except KeyError:
+        data.append(0)
+    # prediction form (24-25)
+    try:
+        data.append(int(prediction["teams"]["home"]["last_5"]["form"][:-1]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(int(prediction["teams"]["away"]["last_5"]["form"][:-1]))
+    except KeyError:
+        data.append(0)
+    # prediction attack (26-27)
+    try:
+        data.append(int(prediction["teams"]["home"]["last_5"]["att"][:-1]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(int(prediction["teams"]["away"]["last_5"]["att"][:-1]))
+    except KeyError:
+        data.append(0)
+    # prediction defence (28-29)
+    try:
+        data.append(int(prediction["teams"]["home"]["last_5"]["def"][:-1]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(int(prediction["teams"]["away"]["last_5"]["def"][:-1]))
+    except KeyError:
+        data.append(0)
+    # last 5 goals home (30-31)
+    try:
+        data.append(int(prediction["teams"]["home"]["last_5"]["goals"]["for"]["total"]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(
+            int(prediction["teams"]["home"]["last_5"]["goals"]["against"]["total"])
+        )
+    except KeyError:
+        data.append(0)
+    # last 5 goals away (32-33)
+    try:
+        data.append(int(prediction["teams"]["away"]["last_5"]["goals"]["for"]["total"]))
+    except KeyError:
+        data.append(0)
+    try:
+        data.append(
+            int(prediction["teams"]["away"]["last_5"]["goals"]["against"]["total"])
+        )
+    except KeyError:
+        data.append(0)
+    # league form (34-35)
+    try:
+        fm = str(prediction["teams"]["home"]["league"]["form"])
+        data.append(fm[:5])
+    except KeyError:
+        data.append("-")
+    try:
+        fm = str(prediction["teams"]["away"]["league"]["form"])
+        data.append(fm[:5])
+    except KeyError:
+        data.append("-")
 
     return data

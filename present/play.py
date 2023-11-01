@@ -16,9 +16,11 @@ logging.basicConfig(
 
 date_format = "%Y-%m-%d"
 dates = [
-    # "2023-10-16",
-    "2023-10-17",
-    # "2023-10-18",
+    "2023-10-26",
+    "2023-10-27",
+    "2023-10-28",
+    "2023-10-29",
+    "2023-10-30",
 ]
 weeks = [datetime.strptime(date, date_format).isocalendar().week for date in dates]
 
@@ -67,6 +69,7 @@ for idx, date in enumerate(dates):
                     # get info and append to display data
                     # logging.info(fixture)
                     data.append(extract_data(fixture, odd, prediction))
+                    # //todo extract only for fixtures in a predefined list
 
             else:
                 logging.error(f"predictions file for {date} does not exist")
@@ -83,24 +86,48 @@ for idx, date in enumerate(dates):
 
 #
 # correct score first half
+# print("\nCorrect score first half\n")
 # response = strategies.correct_score_first_half(data)
 # with open(
 #     f"outputs/week-{weeks[idx]}/strategies/{date}_correct_score_first_half.json", "w+"
 # ) as f:
-#     f.write(json.dumps(response))
-# print(tabulate(response, headers=headers, showindex="always", tablefmt="simple"))
+#     f.write(json.dumps(response[0]))
+# print(tabulate(response[0], headers=headers, showindex="always", tablefmt="simple"))
 
-#
-# both teams to score
-response = strategies.both_teams_to_score(data)
+
+# # both teams to score
+# print("\nBoth teams to score\n")
+# response = strategies.both_teams_to_score(data)
 # with open(
 #     f"outputs/week-{weeks[idx]}/strategies/{date}_both_teams_to_score.json", "w+"
 # ) as f:
-#     f.write(json.dumps(response))
-print(tabulate(response, headers=headers, showindex="always", tablefmt="simple"))
+#     f.write(json.dumps(response[0]))
+# print(tabulate(response[0], headers=headers, showindex="always", tablefmt="simple"))
 
-#
-# test
-# response = strategies.both_teams_to_score(data)
-# print(tabulate(response, headers=headers, showindex="always", tablefmt="simple"))
-# print(len(response))
+
+# # match winner
+# response = strategies.match_winner(data)
+# counts = response[1]
+# msg = f"""\n
+# Fixtures: {counts["evaluated"]}
+#     Home predicted to win:
+#     - Evaluated: {counts["home"]["evaluated"]} -> {counts["home"]["evaluated"]*100/counts["evaluated"]:.2f}%
+#     - Wins: {counts["home"]["wins"]} -> {counts["home"]["wins"]*100/(counts["home"]["wins"] + counts["home"]["losses"]):.2f}%
+#     - Losses: {counts["home"]["losses"]} -> {counts["home"]["losses"]*100/(counts["home"]["wins"] + counts["home"]["losses"]):.2f}%
+#     Away predicted to win:
+#     - Evaluated: {counts["away"]["evaluated"]} -> {counts["away"]["evaluated"]*100/counts["evaluated"]:.2f}%
+#     - Wins: {counts["away"]["wins"]} -> {counts["away"]["wins"]*100/(counts["away"]["wins"] + counts["away"]["losses"]):.2f}%
+#     - Losses: {counts["away"]["losses"]} -> {counts["away"]["losses"]*100/(counts["away"]["wins"] + counts["away"]["losses"]):.2f}%
+# Draws: {counts["draws"]} -> {counts["draws"]*100/counts["evaluated"]:.2f}%
+# """
+# print(
+#     tabulate(response[0], headers=headers[:-2], showindex="always", tablefmt="simple")
+# )
+# print(msg)
+
+# match winner home
+response = strategies.match_winner_away(data)
+print(
+    tabulate(response[0], headers=headers[:-2], showindex="always", tablefmt="simple")
+)
+print(response[1])

@@ -217,44 +217,45 @@ def extract_data(fixture: dict, odds: dict, prediction: dict) -> list:
         data.append(prediction["predictions"]["goals"]["away"])
     except KeyError:
         data.append("-")
+
     # prediction percentages (21-23)
     try:
-        data.append(prediction["predictions"]["percent"]["home"])
+        data.append(prediction["predictions"]["percent"]["home"][:-1])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["predictions"]["percent"]["draw"])
+        data.append(prediction["predictions"]["percent"]["draw"][:-1])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["predictions"]["percent"]["away"])
+        data.append(prediction["predictions"]["percent"]["away"][:-1])
     except KeyError:
         data.append("-")
     # prediction form (24-25)
     try:
-        data.append(prediction["teams"]["home"]["last_5"]["form"])
+        data.append(prediction["teams"]["home"]["last_5"]["form"][:-1])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["teams"]["away"]["last_5"]["form"])
+        data.append(prediction["teams"]["away"]["last_5"]["form"][:-1])
     except KeyError:
         data.append("-")
     # prediction attack (26-27)
     try:
-        data.append(prediction["teams"]["home"]["last_5"]["att"])
+        data.append(prediction["teams"]["home"]["last_5"]["att"][:-1])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["teams"]["away"]["last_5"]["att"])
+        data.append(prediction["teams"]["away"]["last_5"]["att"][:-1])
     except KeyError:
         data.append("-")
     # prediction defence (28-29)
     try:
-        data.append(prediction["teams"]["home"]["last_5"]["def"])
+        data.append(prediction["teams"]["home"]["last_5"]["def"][:-1])
     except KeyError:
         data.append("-")
     try:
-        data.append(prediction["teams"]["away"]["last_5"]["def"])
+        data.append(prediction["teams"]["away"]["last_5"]["def"][:-1])
     except KeyError:
         data.append("-")
     # last 5 goals home (30-31)

@@ -140,7 +140,7 @@ class Collect:
             params = {
                 "fixture": fixture["fixture"]["id"],
             }
-            logging.info(f"fetching prediction for {name}")
+            logging.info(f"{date.strftime('%Y-%m-%d')}: fetching prediction for {name}")
             response = self.api.query("/predictions", params)
             self.count += 1
             if not len(response["errors"]):
@@ -154,9 +154,11 @@ class Collect:
                             [prepend | response["response"][0]],
                         )
                     )
-                logging.info("file created and updated")
+                logging.info(f"{date.strftime('%Y-%m-%d')}: file created and updated")
             else:
-                logging.error(f"no prediction for {name}: {response['errors']}")
+                logging.error(
+                    f"{date.strftime('%Y-%m-%d')}: no prediction for {name}: {response['errors']}"
+                )
         else:
             # file exists - open, check, and update if fixture's prediction is not there
             params = {
@@ -189,21 +191,30 @@ class Collect:
             if not exists:
                 # fetch prediction
                 self.rate_limit()
-                logging.info(f"fetching prediction for {name}")
+                logging.info(
+                    f"{date.strftime('%Y-%m-%d')}: fetching prediction for {name}"
+                )
                 response = self.api.query("/predictions", params)
                 self.count += 1
                 if not len(response["errors"]):
                     # update predictions list
                     predictions.append(prepend | response["response"][0])
                 else:
-                    logging.error(f"no prediction for {name}: {response['errors']}")
-            else:
-                logging.info(f"prediction for {name} already exists")
+                    logging.error(
+                        f"{date.strftime('%Y-%m-%d')}: no prediction for {name}: {response['errors']}"
+                    )
 
-            # save predictions to file
-            with open(
-                f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json",
-                "w",
-            ) as f:
-                f.write(json.dumps(predictions))
-                logging.info(f"file updated with prediction for {name}")
+                # save predictions to file
+                with open(
+                    f"outputs/week-{date.isocalendar().week}/predictions/{date.strftime('%Y-%m-%d')}.json",
+                    "w",
+                ) as f:
+                    f.write(json.dumps(predictions))
+                    logging.info(
+                        f"{date.strftime('%Y-%m-%d')}: file updated with prediction for {name}"
+                    )
+
+            else:
+                logging.info(
+                    f"{date.strftime('%Y-%m-%d')}: exists: prediction for {name}"
+                )

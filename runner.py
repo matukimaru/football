@@ -16,7 +16,9 @@ logging.basicConfig(
 
 date_format = "%Y-%m-%d"
 dates = [
-    "2023-10-16",
+    "2023-10-31",
+    "2023-11-01",
+    "2023-11-02",
 ]
 weeks = [datetime.strptime(date, date_format).isocalendar().week for date in dates]
 
@@ -76,4 +78,4 @@ for idx, date in enumerate(dates):
         exit(0)
 
 # display data
-print(tabulate(data, headers=headers, showindex="always", tablefmt="simple"))
+# print(tabulate(data, headers=headers, showindex="always", tablefmt="simple"))

@@ -1,107 +1,34 @@
-import json
-import logging
-from datetime import datetime
+import math
 
+from analyzer import HEADERS, Analyze
 from tabulate import tabulate
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s : %(message)s",
-)
+from utils import headers
 
 dates = [
-    "2023-10-13",
+    "2023-10-29",
+    "2023-10-30",
+    # "2023-10-31",
+    # "2023-11-01",
+    # "2023-11-02",
 ]
-date_format = "%Y-%m-%d"
 
-for d in dates:
-    date = datetime.strptime(d, date_format)
-    with open(f"outputs/week-{date.isocalendar().week}/predictions/{d}.json", "r") as f:
-        predictions = json.loads(f.read())
+analyzer = Analyze(dates)
 
-    # with open("resources/predictions.json", "r") as f:
-    #     predictions = json.loads(f.read())
-    # print(len(predictions))
+# Avoid fixtures without a prediction or that are missing any odds
+data = [d for d in analyzer.data if 0 not in d and "--" not in d]
+print(tabulate(data, headers=HEADERS, showindex="always", tablefmt="simple"))
 
-    headers = [  # 18
-        "Winner",
-        "G-Home",
-        "G-Away",
-        "P-Hm",
-        "P-Dr",
-        "P-Aw",
-        "F-Hm",
-        "F-Aw",
-        "At-Hm",
-        "At-Aw",
-        "Df-Hm",
-        "Df-Aw",
-        "GF-Hm",
-        "GA-Hm",
-        "GF-Aw",
-        "GA-Aw",
-        "LG-Hm",
-        "LG-Aw",
-    ]
+won = [d for d in data if d[18] == "Won"]
+lost = [d for d in data if d[18] == "Lost"]
+others = [d for d in data if (d[18]) == "PST" or (d[18] == "ABD")]
+res = f"""
+--
+Won:    {len(won)}\t- {math.floor(len(won)*100/(len(won) + len(lost)))}%
+Lost:   {len(lost)}\t- {math.floor(len(lost)*100/(len(won) + len(lost)))}%
+Others: {len(others)}
+--
+Total:  {len(data)}
+"""
+print(res)
 
-    display = []
-
-    for prediction in predictions:
-        hold = []
-        winner = prediction["predictions"]["winner"]["name"]
-        hold.append(winner)
-        goals = [
-            prediction["predictions"]["goals"]["home"],
-            prediction["predictions"]["goals"]["away"],
-        ]
-        hold += goals
-        percent = [
-            prediction["predictions"]["percent"]["home"],
-            prediction["predictions"]["percent"]["draw"],
-            prediction["predictions"]["percent"]["away"],
-        ]
-        hold += percent
-        meta = {
-            "form": [
-                prediction["teams"]["home"]["last_5"]["form"],
-                prediction["teams"]["away"]["last_5"]["form"],
-            ],
-            "attack": [
-                prediction["teams"]["home"]["last_5"]["att"],
-                prediction["teams"]["away"]["last_5"]["att"],
-            ],
-            "defence": [
-                prediction["teams"]["home"]["last_5"]["def"],
-                prediction["teams"]["away"]["last_5"]["def"],
-            ],
-            "goals": {
-                "for": [
-                    prediction["teams"]["home"]["last_5"]["goals"]["for"]["total"],
-                    prediction["teams"]["away"]["last_5"]["goals"]["for"]["total"],
-                ],
-                "against": [
-                    prediction["teams"]["home"]["last_5"]["goals"]["against"]["total"],
-                    prediction["teams"]["away"]["last_5"]["goals"]["against"]["total"],
-                ],
-            },
-            "league": [
-                prediction["teams"]["home"]["league"]["form"],
-                prediction["teams"]["away"]["league"]["form"],
-            ],
-        }
-        hold += meta["form"]
-        hold += meta["attack"]
-        hold += meta["defence"]
-        hold.append(meta["goals"]["for"][0])
-        hold.append(meta["goals"]["against"][0])
-        hold.append(meta["goals"]["for"][1])
-        hold.append(meta["goals"]["against"][1])
-        hold += meta["league"]
-
-        display.append(hold)
-
-        # logging.info(f"winner: {winner}\ngoals: {goals}\npercent: {percent}\nmeta: {meta}")
-
-        # break
-
-print(tabulate(display, headers=headers, showindex="always", tablefmt="simple"))
+print(analyzer.betslips, len(analyzer.betslips))

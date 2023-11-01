@@ -1,71 +1,88 @@
 import json
-import math
+import logging
+import os
 from datetime import datetime
 
+from fuzzywuzzy import fuzz
 from tabulate import tabulate
 
-import analyze.utils as analyzer
+from analyze import strategies
+from present.utils import extract_data, headers
 
-# collect
-dates = [
-    "2023-10-13",
-]
-
-# analyze
-data = []
-date_format = "%Y-%m-%d"
-for d in dates:
-    # load collected data
-    today = datetime.strptime(d, date_format)
-    week = today.isocalendar().week
-    with open(
-        f"outputs/week-{week}/fixtures/{today.strftime('%Y-%m-%d')}.json", "r"
-    ) as f:
-        fixtures = json.loads(f.read())
-    with open(f"outputs/week-{week}/odds/{today.strftime('%Y-%m-%d')}.json", "r") as f:
-        odds = json.loads(f.read())
-
-    # calculate status
-    for fixture in fixtures:
-        for odd in odds:
-            if fixture["fixture"]["id"] == odd["fixture"]["id"]:
-                data.append(analyzer.calculate_status(fixture, odd))
-                # move to next fixture
-                break
-
-print(tabulate(data, headers=analyzer.headers, showindex="always", tablefmt="simple"))
-
-# strategies
-# loop through fixtures
-hold = []
-counts = [0, 0, 0, 0, 0, 0, 0]
-for entry in data:
-    # consider completed fixtures only
-    if entry[11] == "FT" or entry[11] == "PEN":
-        counts[0] += 1
-        # check if home team won
-        if entry[14] > entry[15]:
-            counts[2] += 1
-            if (entry[14] + entry[15]) >= 3:
-                counts[5] += 1
-            if 1.6 <= entry[1] <= 2.1:
-                counts[6] += 1
-        # check if away team won
-        if entry[14] < entry[15]:
-            counts[3] += 1
-        # check if it was a draw
-        if entry[14] == entry[15]:
-            counts[4] += 1
-    else:
-        counts[1] += 1
-
-print(
-    f"analyzed {counts[0]} of {len(data)} fixtures. ({counts[1]}) not considered\n"
-    f"- {counts[2]} are Home wins : {math.ceil(counts[2] / counts[0] * 100)}%\n"
-    f"  - {counts[5]} are 3+ goals : {math.ceil(counts[5] / counts[2] * 100)}%\n"
-    f"  - {counts[6]} are within 1.9 - 2.1 adds : {math.ceil(counts[6] / counts[2] * 100)}%\n"
-    f"- {counts[3]} are Away wins : {math.ceil(counts[3] / counts[0] * 100)}%\n"
-    f"- {counts[4]} are Draws : {math.ceil(counts[4] / counts[0] * 100)}%\n"
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s : %(message)s",
 )
 
-# print(tabulate(hold, headers=analyzer.headers, showindex="always", tablefmt="simple"))
+date_format = "%Y-%m-%d"
+dates = [
+    "2023-10-25",
+    "2023-10-26",
+    "2023-10-27",
+]
+weeks = [datetime.strptime(date, date_format).isocalendar().week for date in dates]
+
+# display data
+data = []
+
+for idx, date in enumerate(dates):
+    # check if the files exist
+    if os.path.exists(f"outputs/week-{weeks[idx]}/fixtures/{date}.json"):
+        if os.path.exists(f"outputs/week-{weeks[idx]}/odds/{date}.json"):
+            if os.path.exists(f"outputs/week-{weeks[idx]}/predictions/{date}.json"):
+                # open files
+                with open(f"outputs/week-{weeks[idx]}/fixtures/{date}.json", "r") as f:
+                    fixtures = json.loads(f.read())
+                with open(f"outputs/week-{weeks[idx]}/odds/{date}.json", "r") as f:
+                    odds = json.loads(f.read())
+                with open(
+                    f"outputs/week-{weeks[idx]}/predictions/{date}.json", "r"
+                ) as f:
+                    predictions = json.loads(f.read())
+                # flist
+                with open(f"resources/flist.txt", "r") as f:
+                    flist_raw = f.readlines()
+                flist = [f.strip().lower() for f in flist_raw]
+
+                #
+                for fl in flist:
+                    # loop through fixtures
+                    for fixture in fixtures:
+                        fn = f'{(fixture["teams"]["home"]["name"]).lower()} v {(fixture["teams"]["away"]["name"]).lower()}'
+
+                        if fuzz.token_sort_ratio(fl, fn) > 85:
+                            # get odd
+                            try:
+                                odd = [
+                                    odd
+                                    for odd in odds
+                                    if odd["fixture"]["id"] == fixture["fixture"]["id"]
+                                ][0]
+                            except IndexError:
+                                odd = {}
+                            # get prediction
+                            try:
+                                prediction = [
+                                    prediction
+                                    for prediction in predictions
+                                    if prediction["fixture"] == fixture["fixture"]["id"]
+                                ][0]
+                            except IndexError:
+                                prediction = {}
+
+                            data.append(extract_data(fixture, odd, prediction))
+
+            else:
+                logging.error(f"predictions file for {date} does not exist")
+                exit(0)
+        else:
+            logging.error(f"odds file for {date} does not exist")
+            exit(0)
+    else:
+        logging.error(f"fixtures file for {date} does not exist")
+        exit(0)
+
+# match winner home
+# response = strategies.match_winner_away(data)
+print(tabulate(data, headers=headers, showindex="always", tablefmt="simple"))
+# print(response[1])
