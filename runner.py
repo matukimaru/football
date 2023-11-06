@@ -16,9 +16,8 @@ logging.basicConfig(
 
 date_format = "%Y-%m-%d"
 dates = [
-    "2023-10-31",
-    "2023-11-01",
-    "2023-11-02",
+    "2023-11-05",
+    "2023-11-06",
 ]
 weeks = [datetime.strptime(date, date_format).isocalendar().week for date in dates]
 

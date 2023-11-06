@@ -294,7 +294,7 @@ def extract_betslips(data: list) -> None:
     """
     dt = [d[0] for d in data if 0 not in d and "--" not in d]
 
-    return betslip_chunks(dt, 7)
+    return betslip_chunks(dt, 30)
 
 
 def betslip_chunks(l: list, n: int) -> list:
